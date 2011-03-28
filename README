@@ -1,0 +1,10 @@
+Dumb Terminal Blu-ray encoder Script
+
+BRencoder V. 02 - Encode M2TS Files and mux to MKV
+Dump M2TS File Info
+Extract Audio Tracks
+Encode M2TS File to Raw 264
+Mux Audio-Video to MKV
+Create Sample File
+Create NFO File ( using miNfoCreate )
+
