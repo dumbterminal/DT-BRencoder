@@ -1,7 +1,7 @@
 #!/bin/bash
 # Dumb Terminal BRencoder ( Blu-ray encoder )
 # Transcoder/Encoder of blu-ray m2ts files - Linux/Bash
-VER="0.2"
+VER="0.3"
 # by: MikereDD
 #
 # This script uses 
@@ -14,7 +14,8 @@ VER="0.2"
 
 # Working Folder Paths
 # Rip Folder - The working rip folder Main
-RIP="$HOME/Rip"
+#RIP="$HOME/Rip"
+RIP="/mnt/filesone/Rip"
 # M2TS Folder - this is where you will put the *.m2ts file you want to encode.
 M2TS="m2ts"
 # Meta files are dumped here.
@@ -309,14 +310,18 @@ muxit ()
 {
     echo "BREncoder V. $VER"
     echo "Muxing Audio and Video Files"
-    VIDTOMUX="$(ls $RIP/$RAW264)"
-    echo -e "Video File: $VIDTOMUX"
-    AUDTOMUX="$(ls $RIP/$AUDIO)"
-    echo -e "Audio File: $AUDTOMUX"
+    cd $RIP/$DONE
+    VIDEOFILE=$(ls $RIP/$RAW264/)
+    VIDEOTOMUX="$RIP/$RAW264/$VIDEOFILE"
+    AUDIOFILE=$(ls $RIP/$AUDIO/)
+    AUDIOTOMUX="$RIP/$AUDIO/$AUDIOFILE"
+#   echo "$VIDEOTOMUX"
+#   echo "$AUDIOTOMUX" 
+# FPS
     if [ -e $RIP/$TEXT/fps.txt ]; then
         rm $RIP/$TEXT/fps.txt
     fi
-    $MEDIAINFO $RIP/$RAW264/$VIDTOMUX | grep fps | cut -f 2 -d ":" | cut -f 1 -d "f" | tr -d " " | tail -1 > $RIP/$TEXT/fps.txt
+    $MEDIAINFO $VIDEOTOMUX | grep fps | cut -f 2 -d ":" | cut -f 1 -d "f" | tr -d " " | tail -1 > $RIP/$TEXT/fps.txt
     MKVFPS="$(cat $RIP/$TEXT/fps.txt)"
     if [ $MKVFPS = "29.970" ]; then
         MKVFPS="29.97fps"
@@ -336,22 +341,29 @@ muxit ()
     echo "Examples: English=eng French=fre Italian=ita Spanish=spa"
     echo "Enter The Language Now."
     echo "------------------"
-    read LANG
+    read LANGUAGE
     echo ""
     echo "------------------"
-    echo "Enter a Title name for your Finished Movie File"
+    echo " Enter a Title name for your Finished Movie File"
     echo "------------------"
     read TITLE
     echo ""
     echo "------------------"
     echo " You Entered.."
-    echo " Language: $LANG"
+    echo " Language: $LANGUAGE"
     echo " Title: $TITLE"
     echo " Now Muxing Audio|Video"
     echo ""
-    sleep 1
-    cd $RIP/$DONE
-    mkvmerge -o $TITLE.mkv --default-duration 0:$MKVFPS $RIP/$RAW264/$VIDTOMUX --language 0:$LANG $RIP/$AUDIO/$AUDTOMUX
+# Dimensions
+    X="$(mediainfo $VIDEOTOMUX | grep -w Width | sed 's/[A-Za-z]*//g' | cut -f 2 -d ":" | sed 's| ||g')"
+    Y="$(mediainfo $VIDEOTOMUX | grep -w Height | sed 's/[A-Za-z]*//g' | cut -f 2 -d ":" | sed 's| ||g')"
+    DIMENSIONS=""$X"x"$Y""
+    echo " Video File: $VIDEOTOMUX"
+    echo " Audio File: $AUDIOTOMUX"
+    echo " Video Dimensions: $DIMENSIONS"
+ # Merge files
+#    echo -e "mkvmerge -o "$TITLE.mkv" --language 0:"$LANGUAGE" "$AUDIOTOMUX" --default-duration 0:"$MKVFPS" "$VIDEOTOMUX""
+    mkvmerge --title "$TITLE" --default-language $LANGUAGE -o $TITLE.mkv --default-duration 0:$MKVFPS --display-dimensions 0:"$X"x"$Y" --noaudio $VIDEOTOMUX --language 0:$LANGUAGE $AUDIOTOMUX
     echo ""
     echo " Done Muxing your file.."
     echo " $RIP/$DONE/$TITLE.mkv is ready for viewing"
