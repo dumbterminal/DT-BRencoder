@@ -276,12 +276,12 @@ esac
 #                     -vf yadif=1,mcdeint,softskip -ofps 23.976 \
 #                     -oac pcm -ovc x264 -x264encopts  $XOPS:bitrate=$BITRATE:turbo=1:pass=3\
 #                     -o $RIP/$RAW264/encoded.264
-    $MENCODER  -v $RIP/$M2TS/movie.m2ts \
+   $MENCODER  -v $RIP/$M2TS/movie.m2ts \
                       -nosound \
                       -vf pullup,softskip,$CROP,$SCALE \
                       -ovc x264 -x264encopts $XOPS:bitrate=$BITRATE:pass=3 \
-                     -of rawvideo \
-                     -o $RIP/$RAW264/encoded.264
+                      -of rawvideo \
+                      -o $RIP/$RAW264/encoded.264
 
     echo "Third Pass Done............"
     echo ""
@@ -292,7 +292,7 @@ esac
 #                     -vf yadif=1,mcdeint,softskip -ofps 23.976 \
 #                     -oac pcm -ovc x264 -x264encopts  $XOPS:bitrate=$BITRATE:turbo=1:pass=2\
 #                     -o $RIP/$RAW264/encoded.264
-    $MENCODER  -v $RIP/$M2TS/movie.m2ts \
+   $MENCODER  -v $RIP/$M2TS/movie.m2ts \
                       -nosound \
                       -vf pullup,softskip,$CROP,$SCALE \
                       -ovc x264 -x264encopts $XOPS:bitrate=$BITRATE:pass=2 \
