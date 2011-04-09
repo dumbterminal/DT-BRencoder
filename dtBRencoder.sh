@@ -15,7 +15,7 @@ VER="0.3"
 # Working Folder Paths
 # Rip Folder - The working rip folder Main
 #RIP="$HOME/Rip"
-RIP="/mnt/filesone/Rip"
+RIP="$HOME/Rip"
 # M2TS Folder - this is where you will put the *.m2ts file you want to encode.
 M2TS="m2ts"
 # Meta files are dumped here.
