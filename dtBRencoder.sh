@@ -2,8 +2,22 @@
 # Dumb Terminal BRencoder ( Blu-ray encoder )
 # Transcoder/Encoder of blu-ray m2ts files - Linux/Bash
 VER="0.3.1"
-# by: MikereDD
 #
+# http://dt.tehspork.com
+# Dumb Terminal
+# Smaller than Life Projects
+# Main Page: http://dt.tehspork.com
+# Git Repo: https://github.com/dumbterminal/
+# By: MikereDD & veekahn
+# email: dumbterminal -at- tehspork.com
+## http://dt.tehspork.com
+# Dumb Terminal
+# Smaller than Life Projects
+# Main Page: http://dt.tehspork.com
+# Git Repo: https://github.com/dumbterminal/
+# By: MikereDD & veekahn
+# email: dumbterminal -at- tehspork.com
+## 
 # This script uses 
 # MPlayer/Mencoder - http://www.mplayerhq.hu/
 # X264             - http://www.videolan.org/developers/x264.html
