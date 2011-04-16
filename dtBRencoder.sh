@@ -1,23 +1,9 @@
 #!/bin/bash
 # Dumb Terminal BRencoder ( Blu-ray encoder )
 # Transcoder/Encoder of blu-ray m2ts files - Linux/Bash
-VER="0.3.1"
+VER="0.3.2"
+# by: MikereDD
 #
-# http://dt.tehspork.com
-# Dumb Terminal
-# Smaller than Life Projects
-# Main Page: http://dt.tehspork.com
-# Git Repo: https://github.com/dumbterminal/
-# By: MikereDD & veekahn
-# email: dumbterminal -at- tehspork.com
-## http://dt.tehspork.com
-# Dumb Terminal
-# Smaller than Life Projects
-# Main Page: http://dt.tehspork.com
-# Git Repo: https://github.com/dumbterminal/
-# By: MikereDD & veekahn
-# email: dumbterminal -at- tehspork.com
-## 
 # This script uses 
 # MPlayer/Mencoder - http://www.mplayerhq.hu/
 # X264             - http://www.videolan.org/developers/x264.html
@@ -144,7 +130,7 @@ encbr ()
     echo "----------------"
     sleep 1
     $MENCODER $RIP/$M2TS/movie.m2ts -oac lavc -ovc lavc -vf cropdetect -o /dev/null > $RIP/$TEXT/cropdetect.txt & PID=$!; sleep 15; kill "$PID"
-    CROP="$(awk '/-vf/{crop=$19} END{sub(").","", crop); print crop}' $RIP/$TEXT/cropdetect.txt)"
+    CROP="$(awk '/-vf/{crop=$9} END{sub(").","", crop); print crop}' $RIP/$TEXT/cropdetect.txt)"
     sleep 1
     echo "Done Grabbing Crop Value"
     echo -e "$CROP"
@@ -391,7 +377,8 @@ csample ()
 # mkvmerge --split timecodes:00:10:00,00:11:00 --split-max-files 3 file.mkv -o file-sample.mkv
     echo "BREncoder V. $VER"
     echo "Creating Sample File"
-    TITLE="$(ls $RIP/$DONE/)"
+    TITLE="$(ls $RIP/$DONE/|grep ".mkv")"
+    echo " Creating sample file of $TITLE"
     mkvmerge --split timecodes:00:10:00,00:11:00 --split-max-files 3 $RIP/$DONE/$TITLE -o $RIP/$SAMPLE/SAMPLE-$TITLE
     echo ""
     rm $RIP/$SAMPLE/*-001.mkv $RIP/$SAMPLE/*-003.mkv
