@@ -1,15 +1,15 @@
 #!/bin/bash
 # Dumb Terminal BRencoder ( Blu-ray encoder )
 # Transcoder/Encoder of blu-ray m2ts files - Linux/Bash
-VER="0.3.2"
+VER="0.4.0"
 # by: MikereDD
 #
-# This script uses 
+# This script uses
 # MPlayer/Mencoder - http://www.mplayerhq.hu/
 # X264             - http://www.videolan.org/developers/x264.html
 # MKVToolNix       - http://www.bunkus.org/videotools/mkvtoolnix/index.html
 # MediaInfo        - http://mediainfo.sourceforge.net
-# tsMuxeR          - http://www.smlabs.net/tsmuxer_en.html
+# tsMuxeR          - http://www.videohelp.com/tools/tsMuxeR
 #
 
 # Working Folder Paths
@@ -39,30 +39,30 @@ NFO="nfo"
 
 # Applications
 # path to mplayer
-MPLAYER="/usr/bin/mplayer"
+MPLAYER=`which mplayer`
 # path to mencoder
-MENCODER="/usr/bin/mencoder"
+MENCODER=`which mencoder`
 # path to a52dec
-A52DEC="/usr/bin/a52dec"
+A52DEC=`which a52dec`
 # path to faac
-FAAC="/usr/bin/faac"
+FAAC=`which faac`
 # path to mkvmerge
-MKVMERGE="/usr/bin/mkvmerge"
+MKVMERGE=`which mkvmerge`
 # path to mkvinfo
-MKVINFO="/usr/bin/mkvinfo"
+MKVINFO=`which mkvinfo`
 # path to mediainfo
-MEDIAINFO="/usr/bin/mediainfo"
+MEDIAINFO=`which mediainfo`
 # path to tsmuxer
-TSMUXER="/opt/tsMuxeR/tsMuxeR"
+TSMUXER=`which tsMuxeR`
 
 # My Scripts
 # miNfo - http://github.com/MikereDD/funscripts/tree/master/miNfo/
 # add path to MI-NFOcreate.sh
-MINFOC="$HOME/apps/miNfo/mi-nfocreate.sh"
+MINFOC=`which minfocreate`
 # add path to iMBD-Dump.sh
-IMDBDUMP="$HOME/apps/miNfo/imdb-dump.sh"
+IMDBDUMP=`which imdbdump-nc`
 # add path to iMDB-thumbgrab.sh
-IMDBTGRAB="$HOME/apps/miNfo/imdb-thumbgrab.sh"
+#IMDBTGRAB=`which imdbthumbgrab`
 
 # Start Loop
 while true
@@ -115,7 +115,7 @@ xaudio ()
         echo "Now Extracting Audio Track ID: $AID"
         $TSMUXER $RIP/$META/movie.meta $RIP/$AUDIO
         echo ""
-        echo "------------------" 
+        echo "------------------"
         echo ""
         echo "Done Extracting Audio Track ID: $AID"
 }
@@ -190,7 +190,7 @@ encbr ()
                 echo "Choice was High Quality"
                 XOPS='frameref=4:mixed_refs:bframes=5:b_adapt=2:weight_b:direct_pred=auto:me=umh:me_range=24:subq=7:psy_rd=0.6,0.2:chroma_me:trellis=1:cabac:deblock:8x8dct:partitions=p8x8,b8x8,i8x8,i4x4:nofast_pskip:nodct_decimate:level_idc=41'
                 ;;
-        C|c) 
+        C|c)
                 echo "Choice was Very High Qaulity"
                 XOPS='frameref=5:mixed_refs:bframes=6:b_adapt=2:weight_b:direct_pred=auto:me=umh:me_range=32:subq=8:psy_rd=0.6,0.2:chroma_me:trellis=1:cabac:deblock:8x8dct:partitions=p8x8,b8x8,i8x8,i4x4:nofast_pskip:nodct_decimate:level_idc=41'
                 ;;
@@ -202,7 +202,7 @@ encbr ()
                 echo "Choice was Insane High Quality"
                 XOPS='frameref=16:mixed_refs:bframes=10:b_adapt=2:weight_b:direct_pred=auto:me=tesa:me_range=64:subq=9:psy_rd=0.6,0.2:chroma_me:trellis=2:cabac:deblock:8x8dct:partitions=all:nofast_pskip:nodct_decimate:level_idc=41'
                 ;;
-        F|f) 
+        F|f)
                 echo "Choice was Near Lossless Quality"
                 XOPS='bitrate=crf=18:frameref=2:bframes=3:b_adapt=2:weight_b:subq=5:me=dia:direct_pred=spatial:partitions=p8x8,b8x8,i4x4:deblock:chroma_me:trellis=1:cabac:no8x8dct:fast_pskip:nodct_decimate:level_idc=41'
                 ;;
@@ -316,7 +316,7 @@ muxit ()
     AUDIOFILE=$(ls $RIP/$AUDIO/)
     AUDIOTOMUX="$RIP/$AUDIO/$AUDIOFILE"
 #   echo "$VIDEOTOMUX"
-#   echo "$AUDIOTOMUX" 
+#   echo "$AUDIOTOMUX"
 # FPS
     if [ -e $RIP/$TEXT/fps.txt ]; then
         rm $RIP/$TEXT/fps.txt
@@ -407,7 +407,7 @@ quit ()
 
 # BR Start
 echo "BREncoder V. $VER"
-sleep 1 
+sleep 1
 echo ""
 echo " A) Dump M2TS Info"
 echo " B) Extract Audio from M2TS File"
